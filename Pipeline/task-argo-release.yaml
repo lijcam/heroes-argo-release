@@ -53,7 +53,7 @@ spec:
         set -x
         yes | argocd login "$ARGOCD_SERVER" --username="$ARGOCD_USERNAME" --password="$ARGOCD_PASSWORD";
 
-        argocd app create "$(params.app-name)" --repo $(params.git-repo) --path $(params.path) --dest-namespace $(params.environment)-$(params.app-name) --label cms.release=$(params.app-name),cms.change-id=$(params.change-id) --dest-server https://kubernetes.default.svc --sync-option CreateNamespace=true 
+        argocd app create "$(params.app-name)" --repo $(params.git-repo) --path $(params.path) --dest-namespace $(params.environment)-$(params.app-name) --label "cms.release=$(params.app-name), cms.change-id=$(params.change-id)" --dest-server https://kubernetes.default.svc --sync-option CreateNamespace=true 
         argocd app sync -l cms.release=$(params.app-name)
 
         argocd app wait -l cms.release=$(params.app-name) --health

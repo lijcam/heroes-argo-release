@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: cms-request-release-unlock-mock
+spec:
+  description: This task is a mock trigger for our change management system.
+  params:
+    - name: change-id
+      description: The change task number
+      type: string
+      default: ""
+    - name: commit-sha
+      description: The revision to sync to
+      default: HEAD
+      type: string
+  steps:
+    - image: registry.access.redhat.com/ubi8/ubi-minimal
+      name: request-unlock
+      script: |
+        #!/usr/bin/env bash
+        echo Requesting release unlock for $(params.change-id)
+        echo with commit-id $(params.commit-sha) 
+        sleep $((RANDOM % 10 + 1))
+        echo ...submitted. HTTP 200

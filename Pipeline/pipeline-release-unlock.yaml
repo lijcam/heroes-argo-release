@@ -1,0 +1,31 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: request-release-unlock
+spec:
+  params:
+  - name: CHANGE_ID
+    type: string
+  - name: COMMIT_SHA
+    type: string
+  - name: APP_GIT_REPO
+    type: string
+  tasks:
+    - name: cms-request-release-unlock
+      params:
+      - name: change-id
+        value: $(params.CHANGE_ID)
+      - name: commit-sha
+        value: $(params.COMMIT_SHA)
+      taskRef:
+        kind: Task
+        name: cms-request-release-unlock-mock
+    - name: cms-wait-for-release
+      params:
+      - name: git-repo
+        value: $(params.APP_GIT_REPO)
+      taskRef:
+        kind: Task
+        name: cms-trigger-release-mock
+      runAfter:
+      - cms-request-release-unlock

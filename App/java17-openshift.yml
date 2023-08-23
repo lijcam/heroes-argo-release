@@ -1457,7 +1457,7 @@ spec:
         prometheus.io/scheme: http
     spec:
       containers:
-        - image: quay.io/rh_ee_cschmitz/ui-super-heroes:latest
+        - image: quay.io/rh_ee_cschmitz/ui-super-heroes-auto:head-5a54ba68e2298126fea0efdac89ba05b53cd4366
           name: ui-super-heroes
           imagePullPolicy: Always
           env:

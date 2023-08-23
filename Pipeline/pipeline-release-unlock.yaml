@@ -6,10 +6,15 @@ spec:
   params:
   - name: CHANGE_ID
     type: string
+    default: CRQ912854
+  - name: ENVIRONMENT
+    type: string
+    default: pre-production
   - name: COMMIT_SHA
     type: string
   - name: APP_GIT_REPO
     type: string
+    default: https://github.com/lijcam/heroes-argo-release.git
   tasks:
     - name: cms-request-release-unlock
       params:
@@ -24,6 +29,8 @@ spec:
       params:
       - name: git-repo
         value: $(params.APP_GIT_REPO)
+      - name: environment
+        value: $(params.ENVIRONMENT)
       taskRef:
         kind: Task
         name: cms-trigger-release-mock

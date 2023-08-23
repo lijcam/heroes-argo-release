@@ -30,6 +30,9 @@ spec:
     - name: path
       description: Path in app definition
       default: ./App/
+    - name: environment
+      type: string
+      default: dev-test
     - name: argocd-version
       default: "1.9"
       type: string
@@ -47,7 +50,7 @@ spec:
         set -x
         yes | argocd login "$ARGOCD_SERVER" --username="$ARGOCD_USERNAME" --password="$ARGOCD_PASSWORD";
 
-        argocd app create "$(params.app-name)" --repo $(params.git-repo) --path $(params.path) --dest-namespace prod-$(params.app-name) --label cms.release=$(params.app-name) --dest-server https://kubernetes.default.svc --sync-option CreateNamespace=true 
+        argocd app create "$(params.app-name)" --repo $(params.git-repo) --path $(params.path) --dest-namespace $(params.environment)-$(params.app-name) --label cms.release=$(params.app-name) --dest-server https://kubernetes.default.svc --sync-option CreateNamespace=true 
         argocd app sync -l cms.release=$(params.app-name)
 
         argocd app wait -l cms.release=$(params.app-name) --health

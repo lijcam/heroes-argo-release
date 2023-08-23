@@ -27,6 +27,8 @@ spec:
         name: cms-request-release-unlock-mock
     - name: cms-wait-for-release
       params:
+      - name: change-id
+        value: $(params.CHANGE_ID)
       - name: git-repo
         value: $(params.APP_GIT_REPO)
       - name: environment
